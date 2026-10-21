@@ -61,6 +61,12 @@ final class GameImportViewModel: ObservableObject {
         status = "Cancelling import…"
     }
 
+    func reportPickerError(_ error: Error) {
+        if (error as? CocoaError)?.code != .userCancelled {
+            errorMessage = error.localizedDescription
+        }
+    }
+
     func refreshStorage() {
         let storedID = UserDefaults.standard.string(forKey: Self.activeImportKey)
         DispatchQueue.global(qos: .utility).async { [weak self] in

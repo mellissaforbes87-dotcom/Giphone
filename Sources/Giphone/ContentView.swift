@@ -161,12 +161,3 @@ struct ContentView: View {
         }
     }
 }
-
-private extension GameImportViewModel {
-    func reportPickerError(_ error: Error) {
-        // Keep picker cancellation quiet; surface actual picker failures.
-        if (error as? CocoaError)?.code != .userCancelled {
-            errorMessage = error.localizedDescription
-        }
-    }
-}
