@@ -66,10 +66,12 @@ final class GameImportViewModel: ObservableObject {
         DispatchQueue.global(qos: .utility).async { [weak self] in
             let directory = try? GameFileImporter.importsDirectory()
             let size = directory.map(Self.sizeOfFiles(in:)) ?? 0
-            let storedImport = storedID.map { directory?.appendingPathComponent($0, isDirectory: true) }
-            let activeImport = storedImport.flatMap { url in
-                guard let url, FileManager.default.fileExists(atPath: url.path) else { return nil }
-                return url
+            let activeImport: URL?
+            if let storedID, let directory {
+                let candidate = directory.appendingPathComponent(storedID, isDirectory: true)
+                activeImport = FileManager.default.fileExists(atPath: candidate.path) ? candidate : nil
+            } else {
+                activeImport = nil
             }
             let report = (activeImport ?? directory).map(GameContentValidator.validate(in:))
             DispatchQueue.main.async {
