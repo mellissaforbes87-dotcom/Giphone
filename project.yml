@@ -1,0 +1,25 @@
+name: Giphone
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "16.0"
+packages:
+  ZIPFoundation:
+    url: https://github.com/weichsel/ZIPFoundation.git
+    from: 0.9.19
+targets:
+  Giphone:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources/Giphone
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.Giphone
+        PRODUCT_NAME: Giphone
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Giphone
+        TARGETED_DEVICE_FAMILY: "1,2"
+    dependencies:
+      - package: ZIPFoundation
